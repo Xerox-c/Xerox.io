@@ -8,15 +8,8 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NotificationsDropdown } from "@/components/notifications-dropdown"
-import { Menu, X, LayoutDashboard, DollarSign, User, LogOut, ChevronDown } from "lucide-react"
+import { Menu, X, LayoutDashboard, DollarSign, User, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 interface ShopkeeperLayoutProps {
   children: React.ReactNode
@@ -55,14 +48,6 @@ export function ShopkeeperLayout({ children }: ShopkeeperLayoutProps) {
 
   const handleMarkAllAsRead = () => {
     setNotifications((prev) => prev.map((notification) => ({ ...notification, read: true })))
-  }
-
-  const handleLogout = () => {
-    // Clear any stored authentication tokens/data
-    localStorage.removeItem("authToken")
-    sessionStorage.clear()
-    // Redirect to login page
-    window.location.href = "/login"
   }
 
   return (
@@ -109,40 +94,28 @@ export function ShopkeeperLayout({ children }: ShopkeeperLayoutProps) {
 
               <ThemeToggle />
 
-              <div className="hidden md:block">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center space-x-2 hover:bg-accent">
-                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                        <User className="h-4 w-4 text-primary" />
-                      </div>
-                      <div className="text-left">
-                        <span className="text-sm font-medium block">Campus Copy Center</span>
-                        <span className="text-xs text-muted-foreground">Shopkeeper</span>
-                      </div>
-                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuItem className="flex items-center space-x-2">
-                      <User className="h-4 w-4" />
-                      <span>Shop Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center space-x-2">
-                      <DollarSign className="h-4 w-4" />
-                      <span>Earnings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={handleLogout}
-                      className="flex items-center space-x-2 text-destructive focus:text-destructive"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      <span>Sign Out</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              {/* Profile */}
+              <div className="hidden md:flex items-center space-x-2">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <User className="h-4 w-4 text-primary" />
+                </div>
+                <span className="text-sm font-medium">Campus Copy Center</span>
               </div>
+
+              {/* Logout button to desktop view */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hidden md:flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                onClick={() => {
+                  // Handle logout logic here
+                  console.log("Logging out...")
+                  window.location.href = "/login"
+                }}
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Sign Out</span>
+              </Button>
 
               {/* Mobile menu toggle */}
               <Button
@@ -184,11 +157,7 @@ export function ShopkeeperLayout({ children }: ShopkeeperLayoutProps) {
                     </div>
                     <span className="text-sm font-medium">Campus Copy Center</span>
                   </div>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
-                    onClick={handleLogout}
-                  >
+                  <Button variant="ghost" className="w-full justify-start text-muted-foreground">
                     <LogOut className="h-4 w-4 mr-2" />
                     Sign Out
                   </Button>

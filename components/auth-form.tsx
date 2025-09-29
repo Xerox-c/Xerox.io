@@ -151,7 +151,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
         <CardHeader className="text-center pb-6 relative">
           <Link href="/" className="flex items-center justify-center space-x-3 mb-8 group">
             <div className="relative">
-              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
                 <div className="h-6 w-6 bg-primary-foreground rounded-lg" />
               </div>
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-pulse" />
@@ -177,13 +177,13 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
             <TabsList className="grid w-full grid-cols-2 bg-muted/30 backdrop-blur-sm border border-border/50">
               <TabsTrigger
                 value="login"
-                className="data-[state=active]:bg-background data-[state=active]:shadow-md transition-all duration-200"
+                className="data-[state=active]:bg-background data-[state=active]:shadow-lg transition-all duration-200"
               >
                 Sign In
               </TabsTrigger>
               <TabsTrigger
                 value="signup"
-                className="data-[state=active]:bg-background data-[state=active]:shadow-md transition-all duration-200"
+                className="data-[state=active]:bg-background data-[state=active]:shadow-lg transition-all duration-200"
               >
                 Create Account
               </TabsTrigger>
@@ -227,7 +227,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                 }}
                 className="space-y-6"
               >
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label htmlFor="login-email" className="text-sm font-semibold text-foreground">
                     Email Address
                   </Label>
@@ -236,9 +236,9 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                     <Input
                       id="login-email"
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder="Enter your email address"
                       className={cn(
-                        "pl-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200",
+                        "pl-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200 rounded-xl",
                         errors.email && "border-destructive focus:border-destructive focus:ring-destructive/10",
                       )}
                       value={formData.email}
@@ -253,7 +253,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                   )}
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label htmlFor="login-password" className="text-sm font-semibold text-foreground">
                     Password
                   </Label>
@@ -264,7 +264,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       className={cn(
-                        "pl-12 pr-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200",
+                        "pl-12 pr-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200 rounded-xl",
                         errors.password && "border-destructive focus:border-destructive focus:ring-destructive/10",
                       )}
                       value={formData.password}
@@ -274,7 +274,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-2 top-2 h-8 w-8 hover:bg-primary/10 transition-colors duration-200"
+                      className="absolute right-2 top-2 h-8 w-8 p-0 hover:bg-primary/10 rounded-lg transition-colors duration-200"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -291,7 +291,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
 
                 <Button
                   type="submit"
-                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary hover:scale-[1.02] transition-all duration-200 rounded-xl shadow-lg hover:shadow-xl"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -318,16 +318,16 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                 className="space-y-6"
               >
                 <div className="space-y-4">
-                  <Label className="text-sm font-semibold text-foreground">I am a</Label>
+                  <Label className="text-sm font-semibold text-foreground">Create account as</Label>
                   <RadioGroup
                     value={userType}
                     onValueChange={(value) => setUserType(value as "student" | "shopkeeper")}
                     className="grid grid-cols-2 gap-4"
                   >
                     <div className="relative">
-                      <RadioGroupItem value="student" id="student" className="peer sr-only" />
+                      <RadioGroupItem value="student" id="signup-student" className="peer sr-only" />
                       <Label
-                        htmlFor="student"
+                        htmlFor="signup-student"
                         className="flex items-center justify-center space-x-3 cursor-pointer rounded-xl border-2 border-muted bg-background/50 p-4 hover:bg-accent/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 transition-all duration-200 hover:scale-[1.02]"
                       >
                         <User className="h-5 w-5 text-primary" />
@@ -335,9 +335,9 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                       </Label>
                     </div>
                     <div className="relative">
-                      <RadioGroupItem value="shopkeeper" id="shopkeeper" className="peer sr-only" />
+                      <RadioGroupItem value="shopkeeper" id="signup-shopkeeper" className="peer sr-only" />
                       <Label
-                        htmlFor="shopkeeper"
+                        htmlFor="signup-shopkeeper"
                         className="flex items-center justify-center space-x-3 cursor-pointer rounded-xl border-2 border-muted bg-background/50 p-4 hover:bg-accent/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 transition-all duration-200 hover:scale-[1.02]"
                       >
                         <Building2 className="h-5 w-5 text-primary" />
@@ -347,28 +347,27 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                   </RadioGroup>
                 </div>
 
-                {/* Enhanced form fields with same styling as login */}
                 <div className="space-y-2">
-                  <Label htmlFor="signup-name" className="text-sm font-semibold text-foreground">
+                  <Label htmlFor="signup-name" className="text-sm font-medium">
                     {userType === "shopkeeper" ? "Owner Name" : "Full Name"}
                   </Label>
-                  <div className="relative group">
-                    <User className="absolute left-4 top-4 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="signup-name"
                       type="text"
                       placeholder={`Enter your ${userType === "shopkeeper" ? "full name" : "name"}`}
                       className={cn(
-                        "pl-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200",
-                        errors.name && "border-destructive focus:border-destructive focus:ring-destructive/10",
+                        "pl-10 h-11 transition-all duration-200 focus:ring-2 focus:ring-primary/20",
+                        errors.name && "border-destructive focus:ring-destructive/20",
                       )}
                       value={formData.name}
                       onChange={(e) => handleInputChange("name", e.target.value)}
                     />
                   </div>
                   {errors.name && (
-                    <div className="flex items-center gap-2 text-sm text-destructive animate-fade-in">
-                      <AlertCircle className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-sm text-destructive">
+                      <AlertCircle className="h-3 w-3" />
                       {errors.name}
                     </div>
                   )}
@@ -376,72 +375,71 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
 
                 {userType === "shopkeeper" && (
                   <div className="space-y-2">
-                    <Label htmlFor="shop-name" className="text-sm font-semibold text-foreground">
+                    <Label htmlFor="shop-name" className="text-sm font-medium">
                       Shop Name
                     </Label>
-                    <div className="relative group">
-                      <Building2 className="absolute left-4 top-4 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
+                    <div className="relative">
+                      <Building2 className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="shop-name"
                         type="text"
                         placeholder="Enter your shop name"
                         className={cn(
-                          "pl-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200",
-                          errors.shopName && "border-destructive focus:border-destructive focus:ring-destructive/10",
+                          "pl-10 h-11 transition-all duration-200 focus:ring-2 focus:ring-primary/20",
+                          errors.shopName && "border-destructive focus:ring-destructive/20",
                         )}
                         value={formData.shopName}
                         onChange={(e) => handleInputChange("shopName", e.target.value)}
                       />
                     </div>
                     {errors.shopName && (
-                      <div className="flex items-center gap-2 text-sm text-destructive animate-fade-in">
-                        <AlertCircle className="h-4 w-4" />
+                      <div className="flex items-center gap-2 text-sm text-destructive">
+                        <AlertCircle className="h-3 w-3" />
                         {errors.shopName}
                       </div>
                     )}
                   </div>
                 )}
 
-                {/* ... existing email and password fields with enhanced styling ... */}
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email" className="text-sm font-semibold text-foreground">
-                    Email Address
+                  <Label htmlFor="signup-email" className="text-sm font-medium">
+                    Email
                   </Label>
-                  <div className="relative group">
-                    <Mail className="absolute left-4 top-4 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="signup-email"
                       type="email"
                       placeholder="Enter your email"
                       className={cn(
-                        "pl-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200",
-                        errors.email && "border-destructive focus:border-destructive focus:ring-destructive/10",
+                        "pl-10 h-11 transition-all duration-200 focus:ring-2 focus:ring-primary/20",
+                        errors.email && "border-destructive focus:ring-destructive/20",
                       )}
                       value={formData.email}
                       onChange={(e) => handleInputChange("email", e.target.value)}
                     />
                   </div>
                   {errors.email && (
-                    <div className="flex items-center gap-2 text-sm text-destructive animate-fade-in">
-                      <AlertCircle className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-sm text-destructive">
+                      <AlertCircle className="h-3 w-3" />
                       {errors.email}
                     </div>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password" className="text-sm font-semibold text-foreground">
+                  <Label htmlFor="signup-password" className="text-sm font-medium">
                     Password
                   </Label>
-                  <div className="relative group">
-                    <Lock className="absolute left-4 top-4 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="signup-password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Create a password"
                       className={cn(
-                        "pl-12 pr-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200",
-                        errors.password && "border-destructive focus:border-destructive focus:ring-destructive/10",
+                        "pl-10 pr-10 h-11 transition-all duration-200 focus:ring-2 focus:ring-primary/20",
+                        errors.password && "border-destructive focus:ring-destructive/20",
                       )}
                       value={formData.password}
                       onChange={(e) => handleInputChange("password", e.target.value)}
@@ -450,7 +448,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-2 top-2 h-8 w-8 hover:bg-primary/10 transition-colors duration-200"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -458,27 +456,26 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                     </Button>
                   </div>
                   {errors.password && (
-                    <div className="flex items-center gap-2 text-sm text-destructive animate-fade-in">
-                      <AlertCircle className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-sm text-destructive">
+                      <AlertCircle className="h-3 w-3" />
                       {errors.password}
                     </div>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirm-password" className="text-sm font-semibold text-foreground">
+                  <Label htmlFor="confirm-password" className="text-sm font-medium">
                     Confirm Password
                   </Label>
-                  <div className="relative group">
-                    <Lock className="absolute left-4 top-4 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="confirm-password"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm your password"
                       className={cn(
-                        "pl-12 pr-12 h-12 text-base bg-background/50 border-2 border-muted focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-200",
-                        errors.confirmPassword &&
-                          "border-destructive focus:border-destructive focus:ring-destructive/10",
+                        "pl-10 pr-10 h-11 transition-all duration-200 focus:ring-2 focus:ring-primary/20",
+                        errors.confirmPassword && "border-destructive focus:ring-destructive/20",
                       )}
                       value={formData.confirmPassword}
                       onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
@@ -487,7 +484,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-2 top-2 h-8 w-8 hover:bg-primary/10 transition-colors duration-200"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     >
                       {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -495,8 +492,8 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
                     </Button>
                   </div>
                   {errors.confirmPassword && (
-                    <div className="flex items-center gap-2 text-sm text-destructive animate-fade-in">
-                      <AlertCircle className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-sm text-destructive">
+                      <AlertCircle className="h-3 w-3" />
                       {errors.confirmPassword}
                     </div>
                   )}
@@ -504,7 +501,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
 
                 <Button
                   type="submit"
-                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary hover:scale-[1.02] transition-all duration-200 rounded-xl shadow-lg hover:shadow-xl"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -523,22 +520,21 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
             </TabsContent>
           </Tabs>
 
-          {/* Enhanced social login section */}
-          <div className="mt-8">
+          <div className="space-y-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <Separator className="w-full bg-gradient-to-r from-transparent via-border to-transparent" />
               </div>
-              <div className="relative flex justify-center text-xs uppercase">
+              <div className="relative flex justify-center text-sm uppercase">
                 <span className="bg-background px-4 text-muted-foreground font-medium">Or continue with</span>
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <Button
                 variant="outline"
                 onClick={() => handleSocialLogin("google")}
-                className="h-12 hover:scale-[1.02] transition-all duration-200 border-2 border-muted hover:border-primary/50 hover:bg-primary/5"
+                className="h-12 border-2 border-muted hover:border-primary/50 hover:bg-primary/5 hover:scale-[1.02] transition-all duration-200 rounded-xl"
               >
                 <svg className="h-5 w-5 mr-3" viewBox="0 0 24 24">
                   <path
@@ -563,7 +559,7 @@ export function AuthForm({ defaultMode = "login" }: AuthFormProps) {
               <Button
                 variant="outline"
                 onClick={() => handleSocialLogin("facebook")}
-                className="h-12 hover:scale-[1.02] transition-all duration-200 border-2 border-muted hover:border-primary/50 hover:bg-primary/5"
+                className="h-12 border-2 border-muted hover:border-primary/50 hover:bg-primary/5 hover:scale-[1.02] transition-all duration-200 rounded-xl"
               >
                 <svg className="h-5 w-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />

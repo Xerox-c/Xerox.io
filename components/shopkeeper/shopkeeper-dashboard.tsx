@@ -12,7 +12,7 @@ interface Order {
   id: string
   studentName: string
   fileName: string
-  status: "new" | "in-progress" | "ready" | "completed"
+  status: "new" | "in-progress" | "ready" | "completed" // Added completed status
   totalAmount: number
   copies: number
   paperSize: string
@@ -20,6 +20,7 @@ interface Order {
   binding: string
   specialInstructions?: string
   createdAt: string
+  completedAt?: string // Added completion timestamp
 }
 
 const mockOrders: Order[] = [
@@ -106,7 +107,8 @@ const mockOrders: Order[] = [
     paperSize: "A4",
     colorType: "black-white",
     binding: "spiral",
-    createdAt: "2024-01-14T15:30:00Z",
+    createdAt: "2024-01-15T08:00:00Z",
+    completedAt: "2024-01-15T09:30:00Z",
   },
   {
     id: "100",
@@ -118,7 +120,8 @@ const mockOrders: Order[] = [
     paperSize: "A4",
     colorType: "black-white",
     binding: "staple",
-    createdAt: "2024-01-14T11:20:00Z",
+    createdAt: "2024-01-14T16:00:00Z",
+    completedAt: "2024-01-14T18:45:00Z",
   },
 ]
 
@@ -126,7 +129,7 @@ const columns = [
   { id: "new", title: "New Orders", icon: Clock, color: "text-blue-600" },
   { id: "in-progress", title: "In Progress", icon: FileText, color: "text-yellow-600" },
   { id: "ready", title: "Ready for Pickup", icon: Package, color: "text-green-600" },
-  { id: "completed", title: "Completed", icon: CheckCircle2, color: "text-gray-600" },
+  { id: "completed", title: "Completed", icon: CheckCircle2, color: "text-purple-600" },
 ] as const
 
 export function ShopkeeperDashboard() {
@@ -153,7 +156,17 @@ export function ShopkeeperDashboard() {
   }
 
   const handleStatusChange = (orderId: string, newStatus: Order["status"]) => {
-    setOrders((prev) => prev.map((order) => (order.id === orderId ? { ...order, status: newStatus } : order)))
+    setOrders((prev) =>
+      prev.map((order) =>
+        order.id === orderId
+          ? {
+              ...order,
+              status: newStatus,
+              ...(newStatus === "completed" && { completedAt: new Date().toISOString() }),
+            }
+          : order,
+      ),
+    )
     setIsModalOpen(false)
   }
 
@@ -162,7 +175,7 @@ export function ShopkeeperDashboard() {
   }
 
   const todayRevenue = orders
-    .filter((order) => order.status === "ready" || order.status === "completed")
+    .filter((order) => order.status === "completed" || order.status === "ready")
     .reduce((sum, order) => sum + order.totalAmount, 0)
 
   return (
@@ -215,7 +228,7 @@ export function ShopkeeperDashboard() {
                 <p className="text-sm text-muted-foreground">Completed</p>
                 <p className="text-2xl font-bold">{getOrdersByStatus("completed").length}</p>
               </div>
-              <CheckCircle2 className="h-8 w-8 text-gray-600" />
+              <CheckCircle2 className="h-8 w-8 text-purple-600" />
             </div>
           </CardContent>
         </Card>
@@ -244,6 +257,7 @@ export function ShopkeeperDashboard() {
         </div>
       ) : (
         <>
+          {/* Desktop Kanban View */}
           <div className="hidden lg:grid lg:grid-cols-4 gap-6">
             {columns.map((column) => {
               const columnOrders = getOrdersByStatus(column.id)
@@ -284,7 +298,9 @@ export function ShopkeeperDashboard() {
                               <p className="text-sm font-medium text-foreground truncate">{order.fileName}</p>
                               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                 <Calendar className="h-3 w-3" />
-                                {new Date(order.createdAt).toLocaleDateString()}
+                                {order.status === "completed" && order.completedAt
+                                  ? `Completed: ${new Date(order.completedAt).toLocaleDateString()}`
+                                  : new Date(order.createdAt).toLocaleDateString()}
                               </div>
                               <div className="flex gap-1 text-xs">
                                 <Badge variant="outline">{order.copies} copies</Badge>
@@ -343,7 +359,9 @@ export function ShopkeeperDashboard() {
                               <p className="text-sm font-medium text-foreground">{order.fileName}</p>
                               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                 <Calendar className="h-3 w-3" />
-                                {new Date(order.createdAt).toLocaleDateString()}
+                                {order.status === "completed" && order.completedAt
+                                  ? `Completed: ${new Date(order.completedAt).toLocaleDateString()}`
+                                  : new Date(order.createdAt).toLocaleDateString()}
                               </div>
                               <div className="flex flex-wrap gap-1 text-xs">
                                 <Badge variant="outline">{order.copies} copies</Badge>
